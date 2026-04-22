@@ -4,7 +4,11 @@ const OpenAI = require('openai');
 const { fetchFullZohoData, buildZohoAIContext } = require('../services/dataService');
 const { loadAllMISData } = require('../services/misDatapack');
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let openai = null;
+function getOpenAI() {
+  if (!openai) openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'placeholder' });
+  return openai;
+}
 
 // Load both Zoho cash flow data + full MIS Datapack
 async function loadAllContext() {
@@ -124,7 +128,7 @@ router.post('/', async (req, res) => {
       ...messages.map(m => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content })),
     ];
 
-    const stream = await openai.chat.completions.create({
+    const stream = await getOpenAI().chat.completions.create({
       model: 'gpt-4o-mini',
       messages: openaiMessages,
       stream: true,

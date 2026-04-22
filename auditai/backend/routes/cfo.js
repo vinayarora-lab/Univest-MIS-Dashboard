@@ -15,7 +15,11 @@ const pdf = require('../services/pdfGenerator');
 const { loadAllMISData } = require('../services/misDatapack');
 const { getCashMISSummary } = require('../services/cashMisService');
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let openai = null;
+function getOpenAI() {
+  if (!openai) openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || 'placeholder' });
+  return openai;
+}
 
 // ─── Default date range helpers ──────────────────────────────────────────────
 function fiscalYear() {
@@ -333,7 +337,7 @@ router.post('/chat', async (req, res) => {
       iteration++;
 
       // Stream the response
-      const stream = await openai.chat.completions.create({
+      const stream = await getOpenAI().chat.completions.create({
         model: 'gpt-4o',
         messages: loopMessages,
         tools: TOOLS,
