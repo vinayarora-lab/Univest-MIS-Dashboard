@@ -1,0 +1,17 @@
+{
+  "name": "zoho-cashflow",
+  "version": "1.0.0",
+  "description": "Cash Flow Statement generator using Zoho Books API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "report": "node index.js --format=json",
+    "report:csv": "node index.js --format=csv",
+    "report:excel": "node index.js --format=excel"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "exceljs": "^4.3.0"
+  }
+}

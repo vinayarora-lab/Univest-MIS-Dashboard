@@ -1,0 +1,29 @@
+{
+  "cohorts": [
+    {
+      "name": "Jan-25",
+      "size": 1250,
+      "revenue": 18750000,
+      "retention": [100, 82, 71, 65, 58, 54]
+    },
+    {
+      "name": "Feb-25",
+      "size": 1420,
+      "revenue": 21300000,
+      "retention": [100, 85, 74, 68, 62, null]
+    },
+    {
+      "name": "Mar-25",
+      "size": 1680,
+      "revenue": 25200000,
+      "retention": [100, 88, 76, 71, null, null]
+    },
+    {
+      "name": "Apr-25",
+      "size": 1950,
+      "revenue": 29250000,
+      "retention": [100, 87, 78, null, null, null]
+    }
+  ],
+  "months": ["M0", "M1", "M2", "M3", "M4", "M5"]
+}

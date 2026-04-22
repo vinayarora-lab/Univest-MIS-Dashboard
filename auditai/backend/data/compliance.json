@@ -1,0 +1,124 @@
+{
+  "items": [
+    {
+      "id": "RBI-001",
+      "category": "RBI",
+      "title": "Capital Adequacy Ratio (CAR)",
+      "description": "Maintain minimum CAR of 15% as per RBI guidelines for NBFCs",
+      "status": "pass",
+      "severity": "critical",
+      "current_value": "18.5%",
+      "threshold": "15%",
+      "last_checked": "2025-04-10T10:00:00Z",
+      "notes": "CAR at 18.5%, well above minimum requirement"
+    },
+    {
+      "id": "RBI-002",
+      "category": "RBI",
+      "title": "KYC Compliance",
+      "description": "100% KYC completion for all active customers",
+      "status": "warning",
+      "severity": "high",
+      "current_value": "96.8%",
+      "threshold": "100%",
+      "last_checked": "2025-04-12T09:00:00Z",
+      "notes": "3.2% of customers have pending KYC renewal — 847 accounts flagged"
+    },
+    {
+      "id": "RBI-003",
+      "category": "RBI",
+      "title": "Liquidity Coverage Ratio (LCR)",
+      "description": "Maintain LCR above 100% for systemic liquidity management",
+      "status": "pass",
+      "severity": "critical",
+      "current_value": "142%",
+      "threshold": "100%",
+      "last_checked": "2025-04-11T08:00:00Z",
+      "notes": "LCR healthy at 142%"
+    },
+    {
+      "id": "RBI-004",
+      "category": "RBI",
+      "title": "NPA Classification",
+      "description": "Non-Performing Assets must be classified per IRACP norms",
+      "status": "pass",
+      "severity": "critical",
+      "current_value": "2.1%",
+      "threshold": "5%",
+      "last_checked": "2025-04-10T10:30:00Z",
+      "notes": "Gross NPA at 2.1%, within acceptable limits"
+    },
+    {
+      "id": "SEBI-001",
+      "category": "SEBI",
+      "title": "AML Transaction Monitoring",
+      "description": "All transactions above ₹10L must be screened for AML compliance",
+      "status": "fail",
+      "severity": "critical",
+      "current_value": "89%",
+      "threshold": "100%",
+      "last_checked": "2025-04-13T11:00:00Z",
+      "notes": "11% of high-value transactions missed automated screening — remediation in progress"
+    },
+    {
+      "id": "SEBI-002",
+      "category": "SEBI",
+      "title": "Insider Trading Policy",
+      "description": "All employees must acknowledge updated insider trading policy",
+      "status": "pass",
+      "severity": "high",
+      "current_value": "100%",
+      "threshold": "100%",
+      "last_checked": "2025-04-01T09:00:00Z",
+      "notes": "All 342 employees have acknowledged the policy"
+    },
+    {
+      "id": "SEBI-003",
+      "category": "SEBI",
+      "title": "Quarterly Disclosure Filing",
+      "description": "File quarterly disclosures with SEBI within 45 days of quarter end",
+      "status": "pending",
+      "severity": "high",
+      "current_value": "Not filed",
+      "threshold": "May 15, 2025",
+      "last_checked": "2025-04-14T10:00:00Z",
+      "notes": "Q1 2025 disclosure due May 15, 2025 — drafting in progress"
+    },
+    {
+      "id": "INT-001",
+      "category": "Internal",
+      "title": "Data Backup Verification",
+      "description": "Daily backup integrity checks must pass 100%",
+      "status": "pass",
+      "severity": "medium",
+      "current_value": "100%",
+      "threshold": "100%",
+      "last_checked": "2025-04-14T06:00:00Z",
+      "notes": "All backups verified successfully for last 30 days"
+    },
+    {
+      "id": "INT-002",
+      "category": "Internal",
+      "title": "Access Control Review",
+      "description": "Quarterly review of user access rights and privileges",
+      "status": "warning",
+      "severity": "medium",
+      "current_value": "Q4 2024",
+      "threshold": "Q1 2025",
+      "last_checked": "2025-04-08T14:00:00Z",
+      "notes": "Q1 2025 access review overdue — 23 accounts with elevated privileges under review"
+    },
+    {
+      "id": "INT-003",
+      "category": "Internal",
+      "title": "Security Patch Management",
+      "description": "All systems must be patched within 30 days of critical CVE release",
+      "status": "fail",
+      "severity": "critical",
+      "current_value": "3 systems unpatched",
+      "threshold": "0 systems unpatched",
+      "last_checked": "2025-04-14T09:00:00Z",
+      "notes": "3 production servers have critical patches pending > 30 days — CVE-2025-1847, CVE-2025-2103"
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-bloomberg-bg text-bloomberg-text font-sans;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-bloomberg-card border border-bloomberg-border rounded-xl shadow-sm;
+  }
+
+  .card-header {
+    @apply px-4 py-3 border-b border-bloomberg-border flex items-center justify-between;
+  }
+
+  .metric-value {
+    @apply text-2xl font-bold text-bloomberg-accent tabular-nums;
+  }
+
+  .metric-label {
+    @apply text-xs text-bloomberg-muted uppercase tracking-wider;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded text-xs font-medium;
+  }
+
+  .badge-green {
+    @apply bg-green-50 text-bloomberg-green border border-green-200;
+  }
+
+  .badge-red {
+    @apply bg-red-50 text-bloomberg-red border border-red-200;
+  }
+
+  .badge-amber {
+    @apply bg-amber-50 text-bloomberg-amber border border-amber-200;
+  }
+
+  .badge-blue {
+    @apply bg-blue-50 text-bloomberg-blue border border-blue-200;
+  }
+
+  .badge-purple {
+    @apply bg-purple-50 text-bloomberg-purple border border-purple-200;
+  }
+
+  .tab-btn {
+    @apply px-4 py-2 text-xs font-medium transition-all duration-150 border-b-2;
+  }
+
+  .tab-btn-active {
+    @apply border-bloomberg-accent text-bloomberg-accent;
+  }
+
+  .tab-btn-inactive {
+    @apply border-transparent text-bloomberg-muted hover:text-bloomberg-subtle;
+  }
+
+  .btn-primary {
+    @apply bg-bloomberg-accent hover:bg-bloomberg-accentHover text-white px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 cursor-pointer shadow-sm;
+  }
+
+  .btn-ghost {
+    @apply text-bloomberg-muted hover:text-bloomberg-subtle hover:bg-bloomberg-surface px-2 py-1 rounded text-xs transition-all duration-150 cursor-pointer;
+  }
+
+  .data-table th {
+    @apply text-bloomberg-muted text-xs uppercase tracking-wider py-2 px-3 text-right bg-bloomberg-bg;
+  }
+
+  .data-table th:first-child {
+    @apply text-left;
+  }
+
+  .data-table td {
+    @apply py-2 px-3 text-sm text-right border-t border-bloomberg-border tabular-nums;
+  }
+
+  .data-table td:first-child {
+    @apply text-left text-bloomberg-subtle;
+  }
+
+  .data-table tr:hover td {
+    @apply bg-bloomberg-bg;
+  }
+
+  .live-dot {
+    @apply w-2 h-2 rounded-full bg-bloomberg-green animate-pulse-slow;
+  }
+}
+
+/* Recharts overrides for light theme */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: #e2e8f0 !important;
+}
+
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: #ffffff !important;
+  border: 1px solid #d1dce8 !important;
+  border-radius: 8px !important;
+  color: #0f172a !important;
+  font-size: 12px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.recharts-tooltip-label {
+  color: #2563eb !important;
+  font-size: 11px !important;
+  margin-bottom: 4px !important;
+}
+
+.recharts-text {
+  fill: #64748b !important;
+  font-size: 11px !important;
+}
+
+/* Custom scrollbar */
+.overflow-auto::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.overflow-auto::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+.overflow-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}

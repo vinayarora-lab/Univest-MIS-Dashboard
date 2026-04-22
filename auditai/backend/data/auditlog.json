@@ -1,0 +1,463 @@
+{
+  "entries": [
+    {
+      "timestamp": "2025-04-14T09:42:11Z",
+      "user": "admin@auditai.com",
+      "action": "LOGIN",
+      "resource": "auth/session",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Admin login from corporate network"
+    },
+    {
+      "timestamp": "2025-04-14T09:45:33Z",
+      "user": "admin@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/pnl/Q1-2025",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Viewed Q1 2025 P&L statement"
+    },
+    {
+      "timestamp": "2025-04-14T09:51:08Z",
+      "user": "analyst1@auditai.com",
+      "action": "LOGIN",
+      "resource": "auth/session",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Analyst login from corporate network"
+    },
+    {
+      "timestamp": "2025-04-14T09:55:22Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/balance-sheet/2025-03",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Viewed March 2025 Balance Sheet"
+    },
+    {
+      "timestamp": "2025-04-14T10:02:47Z",
+      "user": "auditor@auditai.com",
+      "action": "EXPORT_DATA",
+      "resource": "reports/mrr/export",
+      "ip_address": "10.0.0.88",
+      "status": "warning",
+      "details": "Large MRR data export initiated — 6 months, 4 product lines"
+    },
+    {
+      "timestamp": "2025-04-14T10:08:19Z",
+      "user": "manager@auditai.com",
+      "action": "APPROVE_LOAN",
+      "resource": "loans/LN-2025-04-1892",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Loan ₹25,00,000 approved for customer CUS-88234"
+    },
+    {
+      "timestamp": "2025-04-14T10:15:44Z",
+      "user": "analyst2@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/RBI/CAR",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Viewed Capital Adequacy Ratio compliance report"
+    },
+    {
+      "timestamp": "2025-04-14T10:22:31Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/internal/batch-process",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "Nightly batch processing completed — 4,821 transactions processed"
+    },
+    {
+      "timestamp": "2025-04-13T14:33:55Z",
+      "user": "analyst1@auditai.com",
+      "action": "FAILED_LOGIN",
+      "resource": "auth/session",
+      "ip_address": "203.45.67.89",
+      "status": "error",
+      "details": "Failed login attempt from unknown external IP — possible brute force"
+    },
+    {
+      "timestamp": "2025-04-13T14:35:02Z",
+      "user": "analyst1@auditai.com",
+      "action": "FAILED_LOGIN",
+      "resource": "auth/session",
+      "ip_address": "203.45.67.89",
+      "status": "error",
+      "details": "Second consecutive failed login — account temporarily locked"
+    },
+    {
+      "timestamp": "2025-04-13T15:01:18Z",
+      "user": "admin@auditai.com",
+      "action": "ROLE_UPDATE",
+      "resource": "users/analyst2@auditai.com",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Elevated analyst2 privileges to include compliance module access"
+    },
+    {
+      "timestamp": "2025-04-13T15:45:22Z",
+      "user": "manager@auditai.com",
+      "action": "REJECT_LOAN",
+      "resource": "loans/LN-2025-04-1891",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Loan application rejected — insufficient credit score (CIBIL 612)"
+    },
+    {
+      "timestamp": "2025-04-13T16:10:09Z",
+      "user": "auditor@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/audit-log/30d",
+      "ip_address": "10.0.0.88",
+      "status": "success",
+      "details": "Accessed 30-day audit log for compliance review"
+    },
+    {
+      "timestamp": "2025-04-12T11:05:37Z",
+      "user": "system@auditai.com",
+      "action": "DATA_EXPORT",
+      "resource": "customers/kyc-pending",
+      "ip_address": "10.0.0.1",
+      "status": "warning",
+      "details": "Automated KYC pending export — 847 accounts flagged for renewal"
+    },
+    {
+      "timestamp": "2025-04-12T11:30:14Z",
+      "user": "analyst2@auditai.com",
+      "action": "UPDATE_CUSTOMER",
+      "resource": "customers/CUS-72341",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Updated KYC documentation for customer CUS-72341"
+    },
+    {
+      "timestamp": "2025-04-12T13:22:48Z",
+      "user": "admin@auditai.com",
+      "action": "CONFIG_CHANGE",
+      "resource": "system/alert-thresholds",
+      "ip_address": "192.168.1.10",
+      "status": "warning",
+      "details": "AML alert threshold adjusted from ₹8L to ₹10L — requires compliance sign-off"
+    },
+    {
+      "timestamp": "2025-04-11T09:14:55Z",
+      "user": "manager@auditai.com",
+      "action": "BULK_TRANSFER",
+      "resource": "transactions/batch/TXB-20250411-001",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Batch salary disbursement — 342 employees, total ₹92,00,000"
+    },
+    {
+      "timestamp": "2025-04-11T10:05:33Z",
+      "user": "auditor@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/SEBI/AML",
+      "ip_address": "10.0.0.88",
+      "status": "success",
+      "details": "Reviewed AML transaction screening compliance report"
+    },
+    {
+      "timestamp": "2025-04-11T10:45:21Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/cohorts/Q1-2025",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Accessed Q1 customer cohort retention analysis"
+    },
+    {
+      "timestamp": "2025-04-11T14:22:07Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/external/credit-bureau",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "Credit bureau API check completed — 156 applications processed"
+    },
+    {
+      "timestamp": "2025-04-10T09:00:15Z",
+      "user": "admin@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/RBI/NPA",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Reviewed NPA classification compliance — Gross NPA at 2.1%"
+    },
+    {
+      "timestamp": "2025-04-10T09:30:44Z",
+      "user": "manager@auditai.com",
+      "action": "APPROVE_LOAN",
+      "resource": "loans/LN-2025-04-1887",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Loan ₹50,00,000 approved for corporate client CORP-4421"
+    },
+    {
+      "timestamp": "2025-04-10T10:18:33Z",
+      "user": "analyst2@auditai.com",
+      "action": "EXPORT_DATA",
+      "resource": "reports/balance-sheet/export",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Balance sheet data exported to Excel for CFO review"
+    },
+    {
+      "timestamp": "2025-04-09T16:44:12Z",
+      "user": "auditor@auditai.com",
+      "action": "SUSPICIOUS_ACTIVITY",
+      "resource": "transactions/TXN-20250409-8821",
+      "ip_address": "10.0.0.88",
+      "status": "warning",
+      "details": "Flagged transaction ₹18,50,000 — unusual pattern from new customer CUS-91023"
+    },
+    {
+      "timestamp": "2025-04-09T17:01:55Z",
+      "user": "manager@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/suspicious-transactions",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Reviewed flagged suspicious transaction report"
+    },
+    {
+      "timestamp": "2025-04-08T11:15:29Z",
+      "user": "admin@auditai.com",
+      "action": "CONFIG_CHANGE",
+      "resource": "system/access-control/Q1-review",
+      "ip_address": "192.168.1.10",
+      "status": "warning",
+      "details": "Q1 access review initiated — 23 accounts with elevated privileges flagged"
+    },
+    {
+      "timestamp": "2025-04-08T14:33:08Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/mrr/March-2025",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Accessed March 2025 MRR breakdown by product line"
+    },
+    {
+      "timestamp": "2025-04-07T09:22:41Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/internal/backup-verify",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "Daily backup integrity verification completed — all 12 backups valid"
+    },
+    {
+      "timestamp": "2025-04-07T10:45:19Z",
+      "user": "auditor@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/INT/security-patches",
+      "ip_address": "10.0.0.88",
+      "status": "error",
+      "details": "Critical: 3 production servers identified with unpatched CVEs > 30 days"
+    },
+    {
+      "timestamp": "2025-04-07T11:30:02Z",
+      "user": "admin@auditai.com",
+      "action": "ROLE_UPDATE",
+      "resource": "users/system@auditai.com",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "System account permissions reviewed and updated for Q2 operations"
+    },
+    {
+      "timestamp": "2025-04-05T08:55:33Z",
+      "user": "manager@auditai.com",
+      "action": "BULK_TRANSFER",
+      "resource": "transactions/batch/TXB-20250405-001",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Vendor payment batch processed — 28 vendors, total ₹45,00,000"
+    },
+    {
+      "timestamp": "2025-04-04T15:12:44Z",
+      "user": "analyst2@auditai.com",
+      "action": "UPDATE_CUSTOMER",
+      "resource": "customers/CUS-65891",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Updated customer CUS-65891 contact details and re-verification status"
+    },
+    {
+      "timestamp": "2025-04-03T10:05:17Z",
+      "user": "auditor@auditai.com",
+      "action": "DATA_EXPORT",
+      "resource": "reports/annual-audit/2024",
+      "ip_address": "10.0.0.88",
+      "status": "success",
+      "details": "FY2024 annual audit report exported for statutory review"
+    },
+    {
+      "timestamp": "2025-04-02T09:38:52Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/pnl/Q1-2025",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Reviewed Q1 2025 preliminary P&L figures"
+    },
+    {
+      "timestamp": "2025-04-01T14:00:11Z",
+      "user": "admin@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/SEBI/insider-trading",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Confirmed 100% employee acknowledgment of insider trading policy"
+    },
+    {
+      "timestamp": "2025-03-31T18:30:05Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/internal/quarter-close",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "Q1 2025 financial close process completed — all ledgers reconciled"
+    },
+    {
+      "timestamp": "2025-03-28T11:22:38Z",
+      "user": "manager@auditai.com",
+      "action": "APPROVE_LOAN",
+      "resource": "loans/LN-2025-03-1844",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Gold loan ₹8,75,000 approved for customer CUS-44812"
+    },
+    {
+      "timestamp": "2025-03-27T09:15:49Z",
+      "user": "analyst2@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/mrr/February-2025",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Reviewed February MRR — 12.5% MoM growth noted"
+    },
+    {
+      "timestamp": "2025-03-25T16:44:03Z",
+      "user": "auditor@auditai.com",
+      "action": "EXPORT_DATA",
+      "resource": "customers/all/export",
+      "ip_address": "10.0.0.88",
+      "status": "warning",
+      "details": "Full customer database export initiated — 26,450 records, DLP policy triggered"
+    },
+    {
+      "timestamp": "2025-03-24T10:08:22Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/RBI/LCR",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "Liquidity Coverage Ratio review — LCR at 142%, healthy"
+    },
+    {
+      "timestamp": "2025-03-21T14:55:37Z",
+      "user": "admin@auditai.com",
+      "action": "CONFIG_CHANGE",
+      "resource": "system/notification-rules",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Alert notifications updated to include compliance team for critical findings"
+    },
+    {
+      "timestamp": "2025-03-20T09:30:11Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/external/rbi-reporting",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "Monthly RBI statutory report submitted successfully"
+    },
+    {
+      "timestamp": "2025-03-18T11:45:29Z",
+      "user": "manager@auditai.com",
+      "action": "BULK_TRANSFER",
+      "resource": "transactions/batch/TXB-20250318-001",
+      "ip_address": "192.168.1.72",
+      "status": "error",
+      "details": "Batch transfer failed — insufficient funds in nodal account, manual intervention required"
+    },
+    {
+      "timestamp": "2025-03-15T10:22:14Z",
+      "user": "analyst2@auditai.com",
+      "action": "UPDATE_CUSTOMER",
+      "resource": "customers/CUS-39012",
+      "ip_address": "192.168.1.63",
+      "status": "success",
+      "details": "Annual KYC re-verification completed for high-value customer CUS-39012"
+    },
+    {
+      "timestamp": "2025-03-14T16:05:48Z",
+      "user": "auditor@auditai.com",
+      "action": "SUSPICIOUS_ACTIVITY",
+      "resource": "transactions/TXN-20250314-5541",
+      "ip_address": "10.0.0.88",
+      "status": "warning",
+      "details": "Multiple transactions totalling ₹45L from same IP — structuring pattern detected"
+    },
+    {
+      "timestamp": "2025-03-10T09:11:33Z",
+      "user": "analyst1@auditai.com",
+      "action": "VIEW_REPORT",
+      "resource": "reports/cohorts/Feb-2025",
+      "ip_address": "192.168.1.45",
+      "status": "success",
+      "details": "February 2025 cohort M1 retention — 85%"
+    },
+    {
+      "timestamp": "2025-03-07T14:33:09Z",
+      "user": "admin@auditai.com",
+      "action": "ROLE_UPDATE",
+      "resource": "users/auditor@auditai.com",
+      "ip_address": "192.168.1.10",
+      "status": "success",
+      "details": "Auditor role updated with read access to new AML screening module"
+    },
+    {
+      "timestamp": "2025-02-28T17:00:22Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/internal/month-close",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "February 2025 month-end close completed — ₹47.8 Cr revenue reconciled"
+    },
+    {
+      "timestamp": "2025-02-25T11:15:44Z",
+      "user": "manager@auditai.com",
+      "action": "APPROVE_LOAN",
+      "resource": "loans/LN-2025-02-1756",
+      "ip_address": "192.168.1.72",
+      "status": "success",
+      "details": "Personal loan ₹15,00,000 approved for customer CUS-31205"
+    },
+    {
+      "timestamp": "2025-02-20T10:40:18Z",
+      "user": "analyst2@auditai.com",
+      "action": "VIEW_COMPLIANCE",
+      "resource": "compliance/RBI/KYC",
+      "ip_address": "192.168.1.63",
+      "status": "warning",
+      "details": "KYC compliance at 96.8% — 847 accounts with pending renewal flagged"
+    },
+    {
+      "timestamp": "2025-01-31T18:00:01Z",
+      "user": "system@auditai.com",
+      "action": "API_ACCESS",
+      "resource": "api/internal/month-close",
+      "ip_address": "10.0.0.1",
+      "status": "success",
+      "details": "January 2025 month-end close completed — ₹42.5 Cr revenue reconciled"
+    }
+  ]
+}
