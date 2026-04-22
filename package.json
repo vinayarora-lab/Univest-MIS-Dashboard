@@ -4,7 +4,8 @@
   "description": "Cash Flow Statement generator using Zoho Books API",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node auditai/backend/server.js",
+    "build": "cd auditai/frontend && npm install && npm run build && cd ../backend && npm install",
     "report": "node index.js --format=json",
     "report:csv": "node index.js --format=csv",
     "report:excel": "node index.js --format=excel"
