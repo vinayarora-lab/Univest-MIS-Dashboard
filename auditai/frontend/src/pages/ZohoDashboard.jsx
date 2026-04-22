@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const BASE_URL = import.meta.env.VITE_API_URL || '';
-const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || 'http://localhost:5173';
+const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || null;
 
 function ExcelDownloadButton() {
   const [loading, setLoading] = useState(false);
@@ -61,12 +61,18 @@ export default function ZohoDashboard() {
       </div>
 
       {/* Dashboard iframe */}
-      <iframe
-        src={TREASURY_URL}
-        className="flex-1 w-full border-0"
-        style={{ minHeight: 'calc(100vh - 104px)' }}
-        title="Zoho Finance Dashboard"
-      />
+      {TREASURY_URL ? (
+        <iframe
+          src={TREASURY_URL}
+          className="flex-1 w-full border-0"
+          style={{ minHeight: 'calc(100vh - 104px)' }}
+          title="Zoho Finance Dashboard"
+        />
+      ) : (
+        <div className="flex-1 flex items-center justify-center text-gray-400 text-sm">
+          Treasury dashboard not configured. Set <code className="mx-1 bg-gray-100 px-1 rounded">VITE_TREASURY_URL</code> to enable.
+        </div>
+      )}
     </div>
   );
 }
