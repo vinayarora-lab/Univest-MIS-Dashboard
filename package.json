@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node auditai/backend/server.js",
-    "build": "cd auditai/frontend && npm install && npm run build && cd ../backend && npm install",
+    "build": "cd auditai/frontend && npm install && npm run build && cd ../../dashboard/client && npm install && npm run build && cd ../server && npm install && cd ../../auditai/backend && npm install",
     "report": "node index.js --format=json",
     "report:csv": "node index.js --format=csv",
     "report:excel": "node index.js --format=excel"

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const BASE_URL = import.meta.env.VITE_API_URL || '';
-const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || null;
+const TREASURY_URL = import.meta.env.VITE_TREASURY_URL || '/treasury';
 
 function ExcelDownloadButton() {
   const [loading, setLoading] = useState(false);
