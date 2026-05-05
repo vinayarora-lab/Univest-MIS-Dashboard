@@ -10,7 +10,7 @@ const PAGE_TITLES = {
   '/retention': 'Retention Improvements',
   '/overall-cohorts': 'Overall Cohorts (Subscription)',
   '/subscription-cohorts': 'Subscription Booking Cohorts',
-  '/advisory-ideas': 'Advisory Idea Outcomes',
+
   '/broking-cohorts': 'Broking Cohorts',
   '/orders-mix': 'Orders Mix',
   '/revenue-mix': 'Revenue Mix',
@@ -19,14 +19,24 @@ const PAGE_TITLES = {
   '/fundraise': 'Fundraise & Captable',
   '/channel-cac': 'Channel Level CACs',
   '/key-initiatives': 'Key Initiatives Summary',
+  '/analytics-report': 'Analytics Report',
   '/cash-mis': 'Cash MIS',
+  '/board-meeting': 'Board Meeting Dashboard',
 };
+
+// Pages where the TopBar date filter actively filters data
+const DATE_FILTER_PAGES = new Set([
+  '/consolidated-is', '/broking-is', '/signup-conversion', '/retention',
+  '/overall-cohorts', '/subscription-cohorts',
+  '/broking-cohorts', '/orders-mix', '/revenue-mix', '/call-accuracy', '/channel-cac',
+]);
 
 export default function TopBar() {
   const location = useLocation();
   const navigate = useNavigate();
   const title = PAGE_TITLES[location.pathname] || 'Dashboard';
   const { fromMonth, setFromMonth, toMonth, setToMonth } = useDateRange();
+  const showDateFilter = DATE_FILTER_PAGES.has(location.pathname);
 
   const fromOptions = ALL_MONTHS.filter(m => ALL_MONTHS.indexOf(m) <= ALL_MONTHS.indexOf(toMonth));
   const toOptions   = ALL_MONTHS.filter(m => ALL_MONTHS.indexOf(m) >= ALL_MONTHS.indexOf(fromMonth));
@@ -35,11 +45,12 @@ export default function TopBar() {
     <header className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
       <div>
         <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
-        <p className="text-xs text-gray-500">Univest MIS · Apr 23 → Mar 26</p>
+        <p className="text-xs text-gray-500">Univest MIS · {fromMonth} → {toMonth}</p>
       </div>
 
       <div className="flex items-center gap-2">
-        {/* Date range selector */}
+        {/* Date range selector — only on pages that use it */}
+        {showDateFilter && (
         <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-3 py-1.5">
           <span className="text-xs text-gray-500 font-medium">From</span>
           <select
@@ -59,6 +70,7 @@ export default function TopBar() {
             {toOptions.map(m => <option key={m} value={m}>{m}</option>)}
           </select>
         </div>
+        )}
 
         <button
           onClick={() => navigate('/cfo')}

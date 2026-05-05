@@ -4,6 +4,7 @@ const XLSX = require('xlsx');
 const http = require('http');
 const googleSheets = require('../services/googleSheets');
 const { getVendorOutstanding } = require('../services/zohoOutstanding');
+const { getAnalyticsWorkbook } = require('../services/analyticsSheets');
 
 // GET /api/datapack/refresh — force re-fetch from Google Sheets
 router.get('/refresh', async (req, res) => {
@@ -60,8 +61,10 @@ router.get('/signup-conversion', async (req, res) => {
     const rows = getRows(wb, 'Signup to Conversion Cohorts');
     const headerIdx = rows.findIndex(r => String(r[2]).includes('Total Signups'));
     const rawHdr = rows[headerIdx];
-    // M0..M12 columns start at index 3 in raw row
-    const mCols = rawHdr.slice(3).filter(h => h !== '' && String(h).startsWith('M')).slice(0, 13);
+    // Dynamically discover M columns — stop at blank separator before second section
+    const _slicedSC = rawHdr.slice(3);
+    const _blankSC = _slicedSC.findIndex(h => h === '');
+    const mCols = (_blankSC > 0 ? _slicedSC.slice(0, _blankSC) : _slicedSC).filter(h => h !== '' && String(h).startsWith('M'));
     // Use Table 1 rows only: where M0 value is a fraction (< 1) or 0
     const allDataRows = rows.slice(headerIdx + 1).filter(r => typeof r[1] === 'number' && r[1] > 40000);
     const table1 = allDataRows.filter(r => r[3] === 0 || (typeof r[3] === 'number' && r[3] < 1));
@@ -84,11 +87,12 @@ router.get('/overall-cohorts', async (req, res) => {
     const rows = getRows(wb, 'Overall Cohorts (Subscription)');
     const headerIdx = rows.findIndex(r => String(r[1]).includes('INR Mn') || String(r[2]) === 'M0');
     const rawHdr = rows[headerIdx];
-    // M0..M12 as column labels (M0 = absolute rev, M1+ = % of M0)
-    const mCols = rawHdr.slice(3).filter(h => h !== '' && String(h).startsWith('M')).slice(0, 13);
+    // Dynamically discover all M columns — stop at blank separator before second section
+    const _slicedOC = rawHdr.slice(3);
+    const _blankOC = _slicedOC.findIndex(h => h === '');
+    const mCols = (_blankOC > 0 ? _slicedOC.slice(0, _blankOC) : _slicedOC).filter(h => h !== '' && String(h).startsWith('M'));
     const data = rows.slice(headerIdx + 1)
       .filter(r => typeof r[1] === 'number' && r[1] > 40000 && typeof r[2] === 'number')
-      .slice(-18)
       .map(r => {
         const m0Rev = r[2]; // INR Mn absolute
         const obj = { cohort: excelDate(r[1]), m0Revenue: Number(m0Rev.toFixed(3)) };
@@ -116,16 +120,32 @@ router.get('/subscription-cohorts', async (req, res) => {
     // Find the second INR Mn header (Section 2 = absolute revenue) to scope Section 1 only
     const header2Idx = rows.findIndex((r, i) => i > headerIdx && String(r[1]).includes('INR Mn'));
     const sec1Rows = rows.slice(headerIdx + 1, header2Idx > 0 ? header2Idx : undefined);
+    // Dynamically discover how many M columns exist from the header row
+    const headerRow = rows[headerIdx] || [];
+    const retCols = ['Repeat M0'];
+    for (let i = 1; i <= 24; i++) retCols.push(`M${i}`);
+    // Find how many actually exist in the header row (col index 4 onwards)
+    const maxRetCols = retCols.filter((_, i) => {
+      const cellIdx = i + 4;
+      return cellIdx < headerRow.length;
+    });
+
     const data = sec1Rows
       .filter(r => typeof r[1] === 'number' && r[1] > 40000 && typeof r[2] === 'number')
       .map(r => {
-        const obj = { cohort: excelDate(r[1]), newRevenue: r[2], repeatRevenue: typeof r[3] === 'number' ? r[3] : null };
-        ['Repeat M0','M1','M2','M3','M4','M5'].forEach((h, i) => {
-          obj[h] = typeof r[i + 4] === 'number' ? Number((r[i + 4] * 100).toFixed(1)) : null;
+        const newRev = r[2];
+        // r[3] in Section 1 is a ratio (= absolute_repeat_rev / new_rev), convert back to INR Mn
+        const repeatRevRatio = typeof r[3] === 'number' ? r[3] : null;
+        const repeatRevAbs = repeatRevRatio !== null ? Number((repeatRevRatio * newRev).toFixed(3)) : null;
+        const obj = { cohort: excelDate(r[1]), newRevenue: newRev, repeatRevenue: repeatRevAbs };
+        maxRetCols.forEach((h, i) => {
+          const absVal = r[i + 4];
+          // Section 1 stores values as fractions (ratio to newRev), just * 100 to get %
+          obj[h] = typeof absVal === 'number' ? Number((absVal * 100).toFixed(1)) : null;
         });
         return obj;
-      }).slice(-18);
-    res.json({ data });
+      });
+    res.json({ data, headers: maxRetCols });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
@@ -217,7 +237,7 @@ router.get('/advisory-ideas', async (req, res) => {
     for (const h of dateHeaders) { if (!seenH2.has(h)) { seenH2.add(h); finalHeaders.push(h); } }
     dateHeaders.length = 0; finalHeaders.forEach(h => dateHeaders.push(h));
 
-    const sections = ['Ideas Given (#)', 'Ideas Partially Hit/Hit (#)', 'Accuracy %', 'Returns %', 'Alpha %'];
+    const sections = ['Ideas Given (#)', 'Ideas Partially Hit/Hit (#)', 'Accuracy %', 'Returns %', 'Alpha %', 'Average Duration', 'Returns Benchmarking'];
 
     const parseSection = (startLabel) => {
       const startIdx = rows.findIndex(r => String(r[0]).includes(startLabel));
@@ -236,8 +256,22 @@ router.get('/advisory-ideas', async (req, res) => {
     const ideasGiven = parseSection('Ideas Given (#)');
     const ideasHit = parseSection('Ideas Partially Hit/Hit (#)');
     const accuracy = parseSection('Accuracy %');
-    const returns = parseSection('Returns %');
-    const alpha = parseSection('Alpha %');
+
+    // Parse "Returns Benchmarking" section — values are fractions (e.g. 0.089 = 8.9%)
+    const retBenchIdx = rows.findIndex(r => String(r[0]).includes('Returns Benchmarking'));
+    const returns = [], alpha = [];
+    if (retBenchIdx >= 0) {
+      for (let i = retBenchIdx + 1; i < rows.length; i++) {
+        const label = String(rows[i][0] || '').trim();
+        if (!label || label === 'Entry Date>>') continue;
+        const values = dateHeaders.map((_, j) => {
+          const v = rows[i][j + 1];
+          return v !== '' && v != null ? v : null;
+        });
+        if (label.includes('Alpha')) alpha.push({ type: label, values });
+        else if (label.includes('Returns')) returns.push({ type: label, values });
+      }
+    }
 
     res.json({ dateHeaders, ideasGiven, ideasHit, accuracy, returns, alpha });
   } catch (e) { res.status(500).json({ error: e.message }); }
@@ -320,7 +354,39 @@ router.get('/broking-cohorts', async (req, res) => {
       .sort((a, b) => a._serial - b._serial)
       .slice(-18)
       .map(({ _serial, ...r }) => r);
-    res.json({ data });
+
+    // ── Extra tables: users / trades / revenue (wide-format, same header row) ──
+    // Use the big combined header row (has 'months' at col 0 AND 'Cohort Month' at col 19)
+    const bigHdrIdx = rows.findIndex(r => r[0] === 'months' && String(r[19] || '').includes('Cohort'));
+    let broking = [];
+    if (bigHdrIdx >= 0) {
+      broking = rows.slice(bigHdrIdx + 1)
+        .filter(r => typeof r[0] === 'number' && r[0] > 40000)
+        .map(r => {
+          const month = excelDate(r[0]);
+          const newTraders   = typeof r[80] === 'number' ? r[80] : 0; // T5 New M0
+          const repTraders   = typeof r[81] === 'number' ? r[81] : 0; // T5 Repeat M0 (abs count)
+          const newFundUsers = typeof r[20] === 'number' ? r[20] : 0; // T2 New M0
+          const revMn        = typeof r[99] === 'number' ? r[99] : null; // T6 M0 ₹Mn
+          const panSubmitted = typeof r[1]  === 'number' ? r[1]  : 0;
+          const esignPct     = typeof r[2]  === 'number' && r[2] <= 1 ? r[2] * 100 : null;
+          return {
+            month, _serial: r[0],
+            panSubmitted, esignPct: esignPct ? +esignPct.toFixed(1) : null,
+            newFundUsers,
+            newTraders, repTraders,
+            totalTraders: newTraders + repTraders,
+            revMn: revMn != null ? +revMn.toFixed(3) : null,
+            revPerNewTrader: revMn != null && newTraders > 0 ? Math.round(revMn * 1e6 / newTraders) : null,
+            fundToTradePct: newFundUsers > 0 ? +(newTraders / newFundUsers * 100).toFixed(1) : null,
+            panToTradePct:  panSubmitted > 0 ? +(newTraders / panSubmitted * 100).toFixed(1) : null,
+          };
+        })
+        .sort((a, b) => a._serial - b._serial)
+        .map(({ _serial, ...r }) => r);
+    }
+
+    res.json({ data, broking });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
@@ -689,6 +755,64 @@ router.get('/vendor-outstanding', async (req, res) => {
     res.json({ ok: true, ...data });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
+  }
+});
+
+// GET /api/datapack/analytics-report — FY25-FY26 revenue/user/CAC analysis from analytics sheet
+router.get('/analytics-report', async (req, res) => {
+  try {
+    const wb = await getAnalyticsWorkbook();
+    const ws = wb.Sheets['Report'];
+    if (!ws) return res.status(404).json({ error: 'Report sheet not found' });
+    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '', blankrows: false })
+      .filter(r => r.some(c => c !== ''));
+
+    // Find AOP start row (row with "FY2025 AOP" in col 0)
+    const aopIdx = rows.findIndex(r => String(r[0]).includes('FY2025 AOP') || String(r[0]).includes('FY 2025 AOP'));
+
+    // Left column (col 0) — only up to AOP; skip numeric rows and redundant label rows
+    const skipLeftPatterns = [
+      /^[-–—]{4,}/, // title divider line (redundant with page header)
+      /new user CAC/i, // label for LTV-CAC table (already shown as alert card)
+    ];
+    const leftLinesWithSubs = rows.slice(0, aopIdx > 0 ? aopIdx : rows.length)
+      .flatMap(r => {
+        const col0 = String(r[0] || '').trim();
+        const col1 = String(r[1] || '').trim();
+        const lines = [];
+        if (col0 && typeof r[0] !== 'number' && !skipLeftPatterns.some(p => p.test(col0))) lines.push(col0);
+        if (!col0 && col1 && typeof r[1] !== 'number') lines.push('• ' + col1.replace(/^-\s*/, ''));
+        return lines;
+      })
+      .filter(Boolean);
+
+    // Right column (col 6)
+    const rightLines = rows.map(r => String(r[6] || '').trim()).filter(Boolean);
+
+    // LTV-CAC numbers row
+    const ltvcacRow = rows.find(r => typeof r[0] === 'number' && r[0] > 1000);
+    const ltvcac = ltvcacRow ? { cac: ltvcacRow[0], ltv: ltvcacRow[2], netLoss: ltvcacRow[4] } : null;
+
+    // AOP section (from aopIdx to Key Achievements)
+    const achievIdx = rows.findIndex(r => String(r[4] || '').includes('Key Achievements'));
+    const aopLines = rows.slice(aopIdx > 0 ? aopIdx + 1 : 30, achievIdx > 0 ? achievIdx : rows.length)
+      .map(r => String(r[0] || '').trim())
+      .filter(Boolean);
+
+    // Key achievements (col 4, after "Key Achievements" heading)
+    const achievements = rows.slice(achievIdx > 0 ? achievIdx + 1 : 39)
+      .map(r => String(r[4] || '').trim())
+      .filter(x => x.startsWith('-'));
+
+    res.json({
+      leftSections: leftLinesWithSubs,
+      rightSections: rightLines,
+      achievements,
+      ltvcac,
+      aopHighlights: aopLines,
+    });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 });
 

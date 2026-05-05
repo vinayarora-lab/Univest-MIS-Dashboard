@@ -36,7 +36,7 @@ const navGroups = [
     items: [
       { path: '/orders-mix', label: 'Orders Mix', icon: '🛒' },
       { path: '/revenue-mix', label: 'Revenue Mix', icon: '💹' },
-      { path: '/advisory-ideas', label: 'Advisory Idea Outcomes', icon: '💡' },
+
       { path: '/call-accuracy', label: 'Call Accuracy', icon: '🎯' },
     ]
   },
@@ -58,6 +58,12 @@ const navGroups = [
     group: 'AI Assistant',
     items: [
       { path: '/cfo', label: 'CFO Assistant', icon: '🤖' },
+    ]
+  },
+  {
+    group: 'Investor',
+    items: [
+      { path: '/board-meeting', label: 'Board Meeting Deck', icon: '📊' },
     ]
   }
 ];

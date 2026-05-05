@@ -35,10 +35,10 @@ export default function ChannelCAC() {
       .catch(e => setError(e.message));
   }, []);
 
+  const { fromMonth, toMonth } = useDateRange();
+
   if (error) return <div className="text-red-500 text-sm p-4">Error: {error}</div>;
   if (!data) return <div className="text-gray-400 text-sm p-4 animate-pulse">Loading...</div>;
-
-  const { fromMonth, toMonth } = useDateRange();
   const fromIdx = ALL_MONTHS.indexOf(normMonth(fromMonth));
   const toIdx   = ALL_MONTHS.indexOf(normMonth(toMonth));
   const months = data.months.filter(m => {

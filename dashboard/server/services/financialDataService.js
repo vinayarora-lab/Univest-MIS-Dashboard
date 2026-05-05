@@ -33,36 +33,36 @@ const _inflight = new Map();
 
 // ── Disk persistence ──────────────────────────────────────────────────────────
 
+let _cacheReady = false;
+
 function loadDiskCache() {
-  try {
-    if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
-    if (fs.existsSync(CACHE_FILE)) {
-      _memCache = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
-      const keys = Object.keys(_memCache);
+  if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+  if (!fs.existsSync(CACHE_FILE)) { _cacheReady = true; return; }
+  // Async read — don't block the event loop
+  fs.readFile(CACHE_FILE, 'utf8', (err, raw) => {
+    if (err) { console.warn('[cache] Could not load disk cache:', err.message); _cacheReady = true; return; }
+    try {
+      const parsed = JSON.parse(raw);
       const now = Date.now();
-      // Purge expired entries on load
-      let purged = 0;
-      for (const k of keys) {
-        if (now > _memCache[k].expiresAt) { delete _memCache[k]; purged++; }
+      let kept = 0, purged = 0;
+      for (const [k, v] of Object.entries(parsed)) {
+        if (now < v.expiresAt) { _memCache[k] = v; kept++; } else purged++;
       }
-      console.log(`[cache] Loaded ${keys.length - purged} cached entries from disk (${purged} expired purged).`);
-    }
-  } catch (e) {
-    console.warn('[cache] Could not load disk cache:', e.message);
-    _memCache = {};
-  }
+      console.log(`[cache] Loaded ${kept} entries (${purged} expired purged).`);
+    } catch (e) { console.warn('[cache] Cache parse error:', e.message); }
+    _cacheReady = true;
+  });
 }
 
 function saveDiskCache() {
-  try {
-    if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(_memCache));
-  } catch (e) {
-    console.warn('[cache] Could not save disk cache:', e.message);
-  }
+  if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR, { recursive: true });
+  const json = JSON.stringify(_memCache);
+  fs.writeFile(CACHE_FILE, json, (e) => {
+    if (e) console.warn('[cache] Could not save disk cache:', e.message);
+  });
 }
 
-// Load cache from disk on startup — prevents API calls on server restart
+// Load cache from disk asynchronously — server stays responsive during parse
 loadDiskCache();
 
 // Pre-warm cache in background on startup — so first page load is instant

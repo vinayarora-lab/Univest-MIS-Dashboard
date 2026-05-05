@@ -7,6 +7,7 @@ import {
 import { useStore } from '../../store/useStore';
 import { fmtINR, getChangeColor, CHART_COLORS, shortMonthName } from '../../utils/format';
 
+
 const COMPANY_COLORS = {
   Uniresearch: '#f59e0b',
   Univest: '#3b82f6',

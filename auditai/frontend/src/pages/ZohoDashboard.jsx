@@ -60,7 +60,6 @@ export default function ZohoDashboard() {
         <ExcelDownloadButton />
       </div>
 
-      {/* Dashboard iframe */}
       {TREASURY_URL ? (
         <iframe
           src={TREASURY_URL}

@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 import axios from 'axios';
 
-const DEFAULT_FROM = '2024-04-01';
-const DEFAULT_TO = '2025-03-31';
+const DEFAULT_FROM = '2025-04-01';
+const DEFAULT_TO = '2026-03-31';
 
 export const useStore = create((set, get) => ({
   // ── State ────────────────────────────────────────────────────────────────

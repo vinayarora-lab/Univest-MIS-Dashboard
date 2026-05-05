@@ -11,7 +11,7 @@ import RetentionImprovements from './pages/RetentionImprovements';
 import BrokingIS from './pages/BrokingIS';
 import OverallCohorts from './pages/OverallCohorts';
 import SubscriptionCohorts from './pages/SubscriptionCohorts';
-import AdvisoryIdeas from './pages/AdvisoryIdeas';
+
 import BrokingCohorts from './pages/BrokingCohorts';
 import OrdersMix from './pages/OrdersMix';
 import RevenueMix from './pages/RevenueMix';
@@ -21,6 +21,8 @@ import FundraiseHistory from './pages/FundraiseHistory';
 import ChannelCAC from './pages/ChannelCAC';
 import CFOAssistant from './pages/CFOAssistant';
 import CashMIS from './pages/CashMIS';
+import BoardMeeting from './pages/BoardMeeting';
+import AnalyticsReport from './pages/AnalyticsReport';
 
 export default function App() {
   const location = useLocation();
@@ -45,7 +47,7 @@ export default function App() {
               <Route path="/broking-is" element={<BrokingIS />} />
               <Route path="/overall-cohorts" element={<OverallCohorts />} />
               <Route path="/subscription-cohorts" element={<SubscriptionCohorts />} />
-              <Route path="/advisory-ideas" element={<AdvisoryIdeas />} />
+
               <Route path="/broking-cohorts" element={<BrokingCohorts />} />
               <Route path="/orders-mix" element={<OrdersMix />} />
               <Route path="/revenue-mix" element={<RevenueMix />} />
@@ -55,6 +57,8 @@ export default function App() {
               <Route path="/channel-cac" element={<ChannelCAC />} />
               <Route path="/cfo" element={<CFOAssistant />} />
               <Route path="/cash-mis" element={<CashMIS />} />
+              <Route path="/board-meeting" element={<BoardMeeting />} />
+              <Route path="/analytics-report" element={<AnalyticsReport />} />
             </Routes>
           </main>
         </div>

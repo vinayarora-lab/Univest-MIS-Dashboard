@@ -48,10 +48,10 @@ export default function AdvisoryIdeas() {
       .catch(e => setError(e.message));
   }, []);
 
+  const { fromMonth, toMonth } = useDateRange();
+
   if (error) return <div className="text-red-500 text-sm p-4">Error: {error}</div>;
   if (!data) return <div className="text-gray-400 text-sm p-4 animate-pulse">Loading...</div>;
-
-  const { fromMonth, toMonth } = useDateRange();
   const { start, end } = getSliceRange(data.dateHeaders, fromMonth, toMonth);
   const dateHeaders = data.dateHeaders.slice(start, end + 1);
   const fr = rows => (rows || []).map(r => ({ ...r, values: r.values.slice(start, end + 1) }));
@@ -89,8 +89,8 @@ export default function AdvisoryIdeas() {
       <MetricTable title="Ideas Given (#)" rows={ideasGiven} dateHeaders={dateHeaders} pct={false} />
       <MetricTable title="Ideas Partially Hit / Hit (#)" rows={ideasHit} dateHeaders={dateHeaders} pct={false} />
       <MetricTable title="Accuracy %" rows={accuracy} dateHeaders={dateHeaders} pct={false} />
-      <MetricTable title="Returns %" rows={returns} dateHeaders={dateHeaders} pct={false} />
-      <MetricTable title="Alpha %" rows={alpha} dateHeaders={dateHeaders} pct={false} />
+      <MetricTable title="Returns %" rows={returns} dateHeaders={dateHeaders} pct={true} />
+      <MetricTable title="Alpha %" rows={alpha} dateHeaders={dateHeaders} pct={true} />
     </div>
   );
 }

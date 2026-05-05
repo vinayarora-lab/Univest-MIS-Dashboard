@@ -16,6 +16,7 @@ const ledgerRoutes = require('./routes/ledger');
 const cfoRoutes = require('./routes/cfo');
 const cashMisRoutes = require('./routes/cashMis');
 const treasuryRoutes = require('../../dashboard/server/routes/api');
+const boardRoutes = require('./routes/board');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -32,6 +33,7 @@ app.use('/api/datapack', datapackRoutes);
 app.use('/api/ledger', ledgerRoutes);
 app.use('/api/cfo', cfoRoutes);
 app.use('/api/cash-mis', cashMisRoutes);
+app.use('/api/board', boardRoutes);
 app.use('/api', treasuryRoutes);
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

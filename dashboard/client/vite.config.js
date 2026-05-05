@@ -12,6 +12,7 @@ export default defineConfig({
       },
     },
   },
+  base: '/treasury/',
   build: {
     outDir: 'dist',
   },

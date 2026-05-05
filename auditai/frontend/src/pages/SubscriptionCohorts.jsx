@@ -14,7 +14,6 @@ function heatColor(value, max = 100) {
   return { bg: 'bg-gray-50', text: 'text-gray-400' };
 }
 
-const retentionCols = ['Repeat M0', 'M1', 'M2', 'M3', 'M4', 'M5'];
 
 export default function SubscriptionCohorts() {
   const [data, setData] = useState(null);
@@ -26,12 +25,13 @@ export default function SubscriptionCohorts() {
       .catch(e => setError(e.message));
   }, []);
 
+  const { fromMonth, toMonth } = useDateRange();
+
   if (error) return <div className="text-red-500 text-sm p-4">Error: {error}</div>;
   if (!data) return <div className="text-gray-400 text-sm p-4 animate-pulse">Loading...</div>;
-
-  const { fromMonth, toMonth } = useDateRange();
   const fromIdx = ALL_MONTHS.indexOf(normMonth(fromMonth));
   const toIdx   = ALL_MONTHS.indexOf(normMonth(toMonth));
+  const retentionCols = data.headers || ['Repeat M0', 'M1', 'M2', 'M3', 'M4', 'M5'];
   const rows = data.data.filter(r => {
     const i = ALL_MONTHS.indexOf(normMonth(r.cohort));
     return i >= fromIdx && i <= toIdx;
@@ -45,7 +45,7 @@ export default function SubscriptionCohorts() {
   return (
     <div className="max-w-5xl space-y-6">
       <div className="bg-blue-50 border border-blue-200 rounded-lg px-5 py-3 text-sm text-blue-800">
-        <strong>Note:</strong> New Revenue = first-time subscriptions (INR Mn). Repeat Revenue = renewals. M0–M5 columns show retention % relative to new revenue cohort.
+        <strong>Note:</strong> New Revenue = first-time subscriptions (INR Mn). Repeat Revenue = renewals. Retention % columns show repeat revenue relative to the new revenue cohort.
       </div>
 
       {/* Bar chart */}
