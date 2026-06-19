@@ -12,6 +12,7 @@ const navGroups = [
     group: 'Cash MIS',
     items: [
       { path: '/cash-mis', label: 'Cash MIS', icon: '💵' },
+      { path: '/payments', label: 'Payment Tracker', icon: '✅' },
     ]
   },
   {

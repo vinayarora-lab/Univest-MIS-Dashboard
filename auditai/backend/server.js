@@ -15,6 +15,7 @@ const datapackRoutes = require('./routes/datapack');
 const ledgerRoutes = require('./routes/ledger');
 const cfoRoutes = require('./routes/cfo');
 const cashMisRoutes = require('./routes/cashMis');
+const paymentsRoutes = require('./routes/payments');
 const treasuryRoutes = require('../../dashboard/server/routes/api');
 const boardRoutes = require('./routes/board');
 
@@ -33,6 +34,7 @@ app.use('/api/datapack', datapackRoutes);
 app.use('/api/ledger', ledgerRoutes);
 app.use('/api/cfo', cfoRoutes);
 app.use('/api/cash-mis', cashMisRoutes);
+app.use('/api/payments', paymentsRoutes);
 app.use('/api/board', boardRoutes);
 app.use('/api', treasuryRoutes);
 

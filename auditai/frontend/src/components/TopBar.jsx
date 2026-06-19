@@ -21,6 +21,7 @@ const PAGE_TITLES = {
   '/key-initiatives': 'Key Initiatives Summary',
   '/analytics-report': 'Analytics Report',
   '/cash-mis': 'Cash MIS',
+  '/payments': 'Payment Tracker',
   '/board-meeting': 'Board Meeting Dashboard',
 };
 

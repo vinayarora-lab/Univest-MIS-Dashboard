@@ -542,7 +542,8 @@ router.get('/treasury-excel', async (req, res) => {
   };
 
   try {
-    const r = await axios.get('http://localhost:3001/api/dashboard');
+    const port = process.env.PORT || 4000;
+    const r = await axios.get(`http://localhost:${port}/api/dashboard`);
     const dashData  = r.data.data || r.data;
     const companies = dashData.companies || [];
     const consSummary = (dashData.consolidated || {}).summary || {};

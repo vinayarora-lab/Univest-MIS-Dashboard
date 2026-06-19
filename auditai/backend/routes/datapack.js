@@ -686,7 +686,7 @@ router.get('/vendor-payouts', async (req, res) => {
 
     // Call the main dashboard API on localhost:3001
     const dashboardData = await new Promise((resolve, reject) => {
-      const url = `http://localhost:3001/api/dashboard?fromDate=${fromDate}&toDate=${toDate}`;
+      const url = `http://localhost:${process.env.PORT || 4000}/api/dashboard?fromDate=${fromDate}&toDate=${toDate}`;
       http.get(url, (resp) => {
         let body = '';
         resp.on('data', chunk => { body += chunk; });

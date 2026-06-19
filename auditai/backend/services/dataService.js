@@ -6,7 +6,7 @@ const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 function fetchFromZoho(fromDate, toDate) {
   return new Promise((resolve, reject) => {
-    http.get(`http://localhost:3001/api/dashboard?fromDate=${fromDate}&toDate=${toDate}`, (res) => {
+    http.get(`http://localhost:${process.env.PORT || 4000}/api/dashboard?fromDate=${fromDate}&toDate=${toDate}`, (res) => {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {
@@ -38,7 +38,7 @@ async function fetchDashboardData() {
   if (_cache && now - _cacheTime < CACHE_TTL) return _cache;
 
   return new Promise((resolve, reject) => {
-    http.get('http://localhost:3001/api/dashboard?fromDate=2024-04-01&toDate=2025-03-31', (res) => {
+    http.get(`http://localhost:${process.env.PORT || 4000}/api/dashboard?fromDate=2024-04-01&toDate=2025-03-31`, (res) => {
       let body = '';
       res.on('data', chunk => body += chunk);
       res.on('end', () => {

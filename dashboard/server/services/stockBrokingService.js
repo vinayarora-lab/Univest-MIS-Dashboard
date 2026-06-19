@@ -151,7 +151,7 @@ async function fetchStockBrokingBalanceSheet() {
 
   if (gdriveId) {
     console.log('  [StockBroking] Downloading balance sheet from Google Drive...');
-    const url = `https://drive.google.com/uc?export=download&id=${gdriveId}&confirm=1`;
+    const url = `https://drive.usercontent.google.com/download?id=${gdriveId}&export=download&confirm=t`;
     await downloadFile(url, CACHED_FILE);
     console.log('  [StockBroking] Downloaded. Parsing...');
     return parseBalanceSheet(CACHED_FILE);

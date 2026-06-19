@@ -21,6 +21,7 @@ import FundraiseHistory from './pages/FundraiseHistory';
 import ChannelCAC from './pages/ChannelCAC';
 import CFOAssistant from './pages/CFOAssistant';
 import CashMIS from './pages/CashMIS';
+import PaymentTracker from './pages/PaymentTracker';
 import BoardMeeting from './pages/BoardMeeting';
 import AnalyticsReport from './pages/AnalyticsReport';
 
@@ -57,6 +58,7 @@ export default function App() {
               <Route path="/channel-cac" element={<ChannelCAC />} />
               <Route path="/cfo" element={<CFOAssistant />} />
               <Route path="/cash-mis" element={<CashMIS />} />
+              <Route path="/payments" element={<PaymentTracker />} />
               <Route path="/board-meeting" element={<BoardMeeting />} />
               <Route path="/analytics-report" element={<AnalyticsReport />} />
             </Routes>

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const http = require('http');
 
-const ZOHO_SERVER = 'http://localhost:3001';
+const ZOHO_SERVER = `http://localhost:${process.env.PORT || 4000}`;
 
 function fetchZoho(fromDate, toDate) {
   return new Promise((resolve, reject) => {
